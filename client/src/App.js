@@ -1,9 +1,9 @@
-// import Button from '@mui/material/Button';
-import SignInSide from './components/SignIn/SignInSide';
+import Button from '@mui/material/Button';
 import './App.css';
+import Dashboard from '/Users/rouzbehyadollahi/Desktop/remindr/client/src/components/Dashboard/Dashboard.js';
 
 function App() {
-  return <SignInSide/>;
+  return <Dashboard />;
 }
 
 export default App;
