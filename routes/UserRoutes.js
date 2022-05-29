@@ -1,6 +1,7 @@
 const express = require("express"),
   router = express.Router(),
-  { generateAccessToken } = require("../utils/auth")
+  { generateAccessToken } = require("../utils/auth"),
+  { authenticateToken } = require("../middlewares/validateAuth"),
   User = require("../models/user");
 
   
@@ -45,5 +46,10 @@ router.post("/login/", async function (req, res) {
     res.status(403).send("Invalid email/password");
   }
 });
+
+router.get("/", authenticateToken, async function (req, res) {
+  const user = req.user
+  res.json(user);
+})
 
 module.exports = router;
