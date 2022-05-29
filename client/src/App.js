@@ -1,6 +1,5 @@
-import Button from '@mui/material/Button';
 import './App.css';
-import Dashboard from '/Users/rouzbehyadollahi/Desktop/remindr/client/src/components/Dashboard/Dashboard.js';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return <Dashboard />;
