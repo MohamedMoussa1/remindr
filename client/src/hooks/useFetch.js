@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { post } from "../utils/http";
 
-const useFetch = (url) => {
+const useFetch = (url, body) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
@@ -9,7 +10,7 @@ const useFetch = (url) => {
     const abortCont = new AbortController();
 
     setTimeout(() => {
-      fetch(url, { signal: abortCont.signal })
+      post(url, body, abortCont.signal)
         .then((res) => {
           if (!res.ok) {
             // error coming back from server

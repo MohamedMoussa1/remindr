@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,7 +13,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { signIn } from '../actions/user';
+import { signIn, getUser } from '../actions/user';
+import { checkUserToken } from "../utils/auth";
 
 function Copyright(props) {
   return (
@@ -34,15 +36,30 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInSide(props) {
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const token = await signIn(data.get("email"), data.get("password"));
-    console.log(token);
-  };
+  export default function SignInSide() {
+    checkUserToken();
+    const [loginButton, setLoginButton] = React.useState('Sign in');
+    const navigate = useNavigate();
 
-  return (
+    React.useEffect(() => {
+      async function fetchData() {
+        const user = await getUser();
+        if (user) {
+          navigate('/dashboard');
+        }
+      }
+      fetchData();
+    }, [navigate])
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      setLoginButton("Signing in...");
+      await signIn(data.get("email"), data.get("password"));
+      navigate('/dashboard');
+    };
+
+    return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
@@ -112,9 +129,10 @@ export default function SignInSide(props) {
                 type="submit"
                 fullWidth
                 variant="contained"
+                disabled={loginButton !== "Sign in"}
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                {loginButton}
               </Button>
               <Grid container>
                 <Grid item xs>

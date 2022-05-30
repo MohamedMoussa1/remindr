@@ -1,19 +1,34 @@
+const { setCurrentUserToken, removeCurrentUserToken } = require("../utils/auth");
+const { post, get } = require("../utils/http");
+
 async function signIn(email, password) {
     const user = { email, password };
     
     try {
-        const response = await fetch(`http://localhost:5000/api/v1/user/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(user),
-        });
-
+        const response = await post("user/login", user);
         const token = await response.json();
-        localStorage.setItem('user', token);
+        
+        setCurrentUserToken(token);
+        
         return true;
     } catch {
         return false;
     }
 }
 
-module.exports = { signIn }
+function signOut() {
+    removeCurrentUserToken();
+}
+
+async function getUser() {
+    try {
+        const response = await get("user");
+        const user = await response.json();
+
+        return user;
+    } catch {
+        return null;
+    }
+}
+
+module.exports = { signIn, signOut, getUser };

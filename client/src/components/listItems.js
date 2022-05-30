@@ -24,7 +24,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Patients" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/logout'>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>

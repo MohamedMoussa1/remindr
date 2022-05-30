@@ -1,6 +1,7 @@
 import "./App.css";
-import SignInSide from "./components/SignInSide";
-import Dashboard from "./components/Dashboard";
+import SignInSide from "./pages/SignInSide";
+import Dashboard from "./pages/Dashboard";
+import Logout from "./pages/Logout";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<SignInSide />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/logout" element={<Logout />} />
       </Routes>
     </Router>
   );
