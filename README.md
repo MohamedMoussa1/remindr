@@ -1,1 +1,1 @@
-# medify
+# Remindr
