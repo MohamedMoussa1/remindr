@@ -43,7 +43,7 @@ router.post("/login/", async function (req, res) {
     const token = generateAccessToken(user.email);
     res.json(token);
   } catch (err) {
-    res.status(403).send("Invalid email/password");
+    res.status(400).send("Invalid email/password");
   }
 });
 
